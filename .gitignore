@@ -32,11 +32,27 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-# local env files
-.env*.local
+# local env files - ALL environment files to protect API keys
+.env
+.env.*
+.env.local
+.env.*.local
+.env.development
+.env.development.local
+.env.test
+.env.test.local
+.env.production
+.env.production.local
 
 # Sentry Config File
 .env.sentry-build-plugin
+
+# API keys and secrets
+*.key
+*.secret
+secrets.json
+config/secrets.yml
+.envrc
 
 # local folder
 local
