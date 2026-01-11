@@ -1,354 +1,250 @@
-# Boilerplate and Starter for Next.js 16+, Tailwind CSS 4, and TypeScript.
+# DataTable
 
-<p align="center">
-  <a href="https://demo.nextjs-boilerplate.com">
-    <img
-      src="public/assets/images/nextjs-starter-banner.png?raw=true"
-      alt="Next js starter banner"
-      style="max-width: 100%; height: auto;"
-    />
-  </a>
-</p>
+> Bring your entire business into one app with powerful spreadsheet management
 
-🚀 Boilerplate and Starter for Next.js with App Router, Tailwind CSS, and TypeScript ⚡️ Prioritizing developer experience first: Next.js, TypeScript, ESLint, Prettier, Lefthook (replacing Husky), Lint-Staged, Vitest (replacing Jest), Testing Library, Playwright, Commitlint, VSCode, Tailwind CSS, Authentication with [Clerk](https://clerk.com?utm_source=github&utm_medium=sponsorship&utm_campaign=nextjs-boilerplate), Database with DrizzleORM (PostgreSQL, SQLite, and MySQL), Local database with PGlite and production with Neon (PostgreSQL), Error Monitoring with [Sentry](https://sentry.io/for/nextjs/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy25q1-nextjs&utm_content=github-banner-nextjsboilerplate-logo), Logging with LogTape (replacing Pino.js) and Log Management, Monitoring as Code, Storybook, Multi-language (i18n), AI-powered code reviews with CodeRabbit, Secure with [Arcjet](https://launch.arcjet.com/Q6eLbRE) (Bot detection, Rate limiting, Attack protection, etc.), and more.
+## What is DataTable?
 
-Clone this project and use it to create your own Next.js project. You can check out the live demo at [Next.js Boilerplate](https://demo.nextjs-boilerplate.com), which includes a working authentication system.
+DataTable is a comprehensive business management platform that consolidates all your operational needs into a single, intuitive spreadsheet-based application. Built with Next.js and modern web technologies, DataTable provides a familiar spreadsheet interface while offering the power and flexibility of a full-featured business management system.
 
-## Sponsors
+## Vision
 
-<table width="100%">
-  <tr height="187px">
-    <td align="center" width="33%">
-      <a href="https://clerk.com?utm_source=github&utm_medium=sponsorship&utm_campaign=nextjs-boilerplate">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://github.com/ixartz/SaaS-Boilerplate/assets/1328388/6fb61971-3bf1-4580-98a0-10bd3f1040a2">
-          <source media="(prefers-color-scheme: light)" srcset="https://github.com/ixartz/SaaS-Boilerplate/assets/1328388/f80a8bb5-66da-4772-ad36-5fabc5b02c60">
-          <img alt="Clerk – Authentication & User Management for Next.js" src="https://github.com/ixartz/SaaS-Boilerplate/assets/1328388/f80a8bb5-66da-4772-ad36-5fabc5b02c60">
-        </picture>
-      </a>
-    </td>
-    <td align="center" width="33%">
-      <a href="https://www.coderabbit.ai?utm_source=next_js_starter&utm_medium=github&utm_campaign=next_js_starter_oss_2025">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="public/assets/images/coderabbit-logo-dark.svg?raw=true">
-          <source media="(prefers-color-scheme: light)" srcset="public/assets/images/coderabbit-logo-light.svg?raw=true">
-          <img alt="CodeRabbit" src="public/assets/images/coderabbit-logo-light.svg?raw=true">
-        </picture>
-      </a>
-    </td>
-    <td align="center" width="33%">
-      <a href="https://sentry.io/for/nextjs/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy25q1-nextjs&utm_content=github-banner-nextjsboilerplate-logo">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="public/assets/images/sentry-white.png?raw=true">
-          <source media="(prefers-color-scheme: light)" srcset="public/assets/images/sentry-dark.png?raw=true">
-          <img alt="Sentry" src="public/assets/images/sentry-dark.png?raw=true">
-        </picture>
-      </a>
-      <a href="https://about.codecov.io/codecov-free-trial/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy25q1-nextjs&utm_content=github-banner-nextjsboilerplate-logo">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="public/assets/images/codecov-white.svg?raw=true">
-          <source media="(prefers-color-scheme: light)" srcset="public/assets/images/codecov-dark.svg?raw=true">
-          <img alt="Codecov" src="public/assets/images/codecov-dark.svg?raw=true">
-        </picture>
-      </a>
-    </td>
-  </tr>
-  <tr height="187px">
-    <td align="center" width="33%">
-      <a href="https://launch.arcjet.com/Q6eLbRE">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="public/assets/images/arcjet-dark.svg?raw=true">
-          <source media="(prefers-color-scheme: light)" srcset="public/assets/images/arcjet-light.svg?raw=true">
-          <img alt="Arcjet" src="public/assets/images/arcjet-light.svg?raw=true">
-        </picture>
-      </a>
-    </td>
-    <td align="center" width="33%">
-      <a href="https://sevalla.com/">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="public/assets/images/sevalla-dark.png">
-          <source media="(prefers-color-scheme: light)" srcset="public/assets/images/sevalla-light.png">
-          <img alt="Sevalla" src="public/assets/images/sevalla-light.png">
-        </picture>
-      </a>
-    </td>
-    <td align="center" width="33%">
-      <a href="https://l.crowdin.com/next-js">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="public/assets/images/crowdin-white.png?raw=true">
-          <source media="(prefers-color-scheme: light)" srcset="public/assets/images/crowdin-dark.png?raw=true">
-          <img alt="Crowdin" src="public/assets/images/crowdin-dark.png?raw=true">
-        </picture>
-      </a>
-    </td>
-  </tr>
-  <tr height="187px">
-    <td align="center" width="33%">
-      <a href="https://betterstack.com/?utm_source=github&utm_medium=sponsorship&utm_campaign=next-js-boilerplate">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="public/assets/images/better-stack-white.png?raw=true">
-          <source media="(prefers-color-scheme: light)" srcset="public/assets/images/better-stack-dark.png?raw=true">
-          <img alt="Better Stack" src="public/assets/images/better-stack-dark.png?raw=true">
-        </picture>
-      </a>
-    </td>
-    <td align="center" width="33%">
-      <a href="https://posthog.com/?utm_source=github&utm_medium=sponsorship&utm_campaign=next-js-boilerplate">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="https://posthog.com/brand/posthog-logo-white.svg">
-          <source media="(prefers-color-scheme: light)" srcset="https://posthog.com/brand/posthog-logo.svg">
-          <img alt="PostHog" src="https://posthog.com/brand/posthog-logo.svg">
-        </picture>
-      </a>
-    </td>
-    <td align="center" width="33%">
-      <a href="https://www.checklyhq.com/?utm_source=github&utm_medium=sponsorship&utm_campaign=next-js-boilerplate">
-        <picture>
-          <source media="(prefers-color-scheme: dark)" srcset="public/assets/images/checkly-logo-dark.png?raw=true">
-          <source media="(prefers-color-scheme: light)" srcset="public/assets/images/checkly-logo-light.png?raw=true">
-          <img alt="Checkly" src="public/assets/images/checkly-logo-light.png?raw=true">
-        </picture>
-      </a>
-    </td>
-  </tr>
-  <tr height="187px">
-    <td align="center" style=width="33%">
-      <a href="https://nextjs-boilerplate.com/pro-saas-starter-kit">
-        <img src="public/assets/images/nextjs-boilerplate-saas.png?raw=true" alt="Next.js SaaS Boilerplate with React" />
-      </a>
-    </td>
-    <td align="center" width="33%">
-      <a href="mailto:contact@creativedesignsguru.com">
-        Add your logo here
-      </a>
-    </td>
-  </tr>
-</table>
+The goal of DataTable is to eliminate the complexity of managing multiple disconnected tools and platforms. Whether you're tracking inventory, managing orders, monitoring staff attendance, or tracking project progress, DataTable brings everything together in one unified workspace.
 
-### Demo
+**One App. Multiple Spreadsheets. Infinite Possibilities.**
 
-**Live demo: [Next.js Boilerplate](https://demo.nextjs-boilerplate.com)**
+## Key Features
 
-| Sign Up | Sign In |
-| --- | --- |
-| [![Next.js Boilerplate SaaS Sign Up](public/assets/images/nextjs-boilerplate-sign-in.png)](https://demo.nextjs-boilerplate.com/sign-up) | [![Next.js Boilerplate SaaS Sign In](public/assets/images/nextjs-boilerplate-sign-in.png)](https://demo.nextjs-boilerplate.com/sign-in) |
+### Real-Time Spreadsheet Interface
+- **Excel-like Experience**: Familiar spreadsheet interface with click-to-edit cells
+- **Instant Updates**: Real-time data synchronization with server-side persistence
+- **Smart Editing**: Intelligent cell editing with type-specific inputs (text, numbers, dates, dropdowns)
+- **Visual Feedback**: Clear indicators for unsaved changes and successful saves
 
-### Features
+### Flexible Data Management
+- **Add & Delete Rows**: Easily manage your data with intuitive row operations
+- **Batch Operations**: Update multiple rows simultaneously for efficient data management
+- **Data Protection**: Built-in safeguards with locked item names to prevent accidental modifications
+- **Status Tracking**: Customizable status fields (Active, Inactive, Pending, Completed)
 
-Developer experience first, extremely flexible code structure and only keep what you need:
+### Business Use Cases
 
-- ⚡ [Next.js](https://nextjs.org) with App Router support
-- 🔥 Type checking [TypeScript](https://www.typescriptlang.org)
-- 💎 Integrate with [Tailwind CSS](https://tailwindcss.com)
-- ✅ Strict Mode for TypeScript and React 19
-- 🔒 Authentication with [Clerk](https://clerk.com?utm_source=github&utm_medium=sponsorship&utm_campaign=nextjs-boilerplate): Sign up, Sign in, Sign out, Forgot password, Reset password, and more.
-- 👤 Passwordless Authentication with Magic Links, Multi-Factor Auth (MFA), Social Auth (Google, Facebook, Twitter, GitHub, Apple, and more), Passwordless login with Passkeys, User Impersonation
-- 📦 Type-safe ORM with DrizzleORM, compatible with PostgreSQL, SQLite, and MySQL
-- 💽 Offline and local development database with PGlite
-- ☁️ Remote and production database with Neon (PostgreSQL)
-- 🌐 Multi-language (i18n) with next-intl and [Crowdin](https://l.crowdin.com/next-js)
-- ♻️ Type-safe environment variables with T3 Env
-- ⌨️ Form handling with React Hook Form
-- 🔴 Validation library with Zod
-- 📏 Linter with [ESLint](https://eslint.org) (default Next.js, Next.js Core Web Vitals, Tailwind CSS and Antfu configuration)
-- 💖 Code Formatter with Prettier
-- 🦊 Husky for Git Hooks (replaced by Lefthook)
-- 🚫 Lint-staged for running linters on Git staged files
-- 🚓 Lint git commit with Commitlint
-- 📓 Write standard compliant commit messages with Commitizen
-- 🔍 Unused files and dependencies detection with Knip
-- 🌍 I18n validation and missing translation detection with i18n-check
-- 🦺 Unit Testing with Vitest and Browser mode (replacing React Testing Library)
-- 🧪 Integration and E2E Testing with Playwright
-- 👷 Run tests on pull request with GitHub Actions
-- 🎉 Storybook for UI development
-- 🐰 AI-powered code reviews with [CodeRabbit](https://www.coderabbit.ai?utm_source=next_js_starter&utm_medium=github&utm_campaign=next_js_starter_oss_2025)
-- 🚨 Error Monitoring with [Sentry](https://sentry.io/for/nextjs/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy25q1-nextjs&utm_content=github-banner-nextjsboilerplate-logo)
-- 🔍 Local development error monitoring with Sentry Spotlight
-- ☂️ Code coverage with [Codecov](https://about.codecov.io/codecov-free-trial/?utm_source=github&utm_medium=paid-community&utm_campaign=general-fy25q1-nextjs&utm_content=github-banner-nextjsboilerplate-logo)
-- 📝 Logging with LogTape and Log Management with [Better Stack](https://betterstack.com/?utm_source=github&utm_medium=sponsorship&utm_campaign=next-js-boilerplate)
-- 🖥️ Monitoring as Code with [Checkly](https://www.checklyhq.com/?utm_source=github&utm_medium=sponsorship&utm_campaign=next-js-boilerplate)
-- 🔐 Security and bot protection ([Arcjet](https://launch.arcjet.com/Q6eLbRE))
-- 📊 Analytics with PostHog
-- 🎁 Automatic changelog generation with Semantic Release
-- 🔍 Visual regression testing
-- 💡 Absolute Imports using `@` prefix
-- 🗂 VSCode configuration: Debug, Settings, Tasks and Extensions
-- 🤖 SEO metadata, JSON-LD and Open Graph tags
-- 🗺️ Sitemap.xml and robots.txt
-- 👷 Automatic dependency updates with Dependabot
-- ⌘ Database exploration with Drizzle Studio and CLI migration tool with Drizzle Kit
-- ⚙️ Bundler Analyzer
-- 🌈 Include a FREE minimalist theme
-- 💯 Maximize lighthouse score
+DataTable adapts to your business needs with multiple spreadsheets, each handling different aspects of your operations:
 
-Built-in features from Next.js:
+#### Inventory Management
+- Track stock levels in real-time
+- Monitor item quantities and units
+- Set reorder points and alerts
+- Categorize products for better organization
 
-- ☕ Minify HTML & CSS
-- 💨 Live reload
-- ✅ Cache busting
+#### Order Management
+- Track customer orders and fulfillment status
+- Monitor order dates and deadlines
+- Update order statuses as they progress
+- Manage order quantities and specifications
 
-Optional features (easy to add):
+#### Staff Management
+- Clock-in/clock-out tracking
+- Shift scheduling and management
+- Staff availability monitoring
+- Time-off requests and approvals
 
-- 🔑 Multi-tenancy, Role-based access control (RBAC)
-- 🔐 OAuth for Single Sign-On (SSO), Enterprise SSO, SAML, OpenID Connect (OIDC), EASIE
-- 🔗 Web 3 (Base, MetaMask, Coinbase Wallet, OKX Wallet)
+#### Project Tracking
+- Task progress monitoring
+- Milestone tracking
+- Team assignments
+- Deadline management
 
-### Philosophy
+#### Sales Tracking
+- Revenue monitoring
+- Sales target tracking
+- Product performance analysis
+- Customer order history
 
-- Nothing is hidden from you, allowing you to make any necessary adjustments to suit your requirements and preferences.
-- Dependencies are regularly updated on a monthly basis
-- Start for free without upfront costs
-- Easy to customize
-- Minimal code
-- Unstyled template
-- SEO-friendly
-- 🚀 Production-ready
+#### Asset Management
+- Equipment tracking
+- Maintenance schedules
+- Asset location monitoring
+- Depreciation tracking
 
-### Requirements
+## Technology Stack
 
-- Node.js 22+ and npm
+DataTable is built with cutting-edge web technologies for maximum performance and reliability:
 
-### Getting started
+- **Frontend**: React 19 with Next.js 16
+- **UI Framework**: Tailwind CSS 4
+- **Database**: PostgreSQL with Drizzle ORM
+- **Authentication**: Clerk
+- **Monitoring**: Sentry for error tracking
+- **Security**: Arcjet for API protection
+- **Internationalization**: next-intl for multi-language support
 
-Run the following command on your local environment:
+## Getting Started
 
-```shell
-git clone --depth=1 https://github.com/ixartz/Next-js-Boilerplate.git my-project-name
-cd my-project-name
-npm install
+### Prerequisites
+
+- Node.js 20 or higher
+- PostgreSQL database
+- pnpm (recommended) or npm
+
+### Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd DataTable
 ```
 
-For your information, all dependencies are updated every month.
-
-Then, you can run the project locally in development mode with live reload by executing:
-
-```shell
-npm run dev
+2. Install dependencies:
+```bash
+pnpm install
 ```
 
-Open http://localhost:3000 with your favorite browser to see your project. For your information, the project is already pre-configured with a database.
+3. Set up environment variables:
+```bash
+cp .env.example .env.local
+```
 
-> [!WARNING]
-> Next.js Boilerplate ships with a fully working Postgres database for your local environment. This database is **temporary** and will expire after **72 hours** if you don't claim it.
->
-> Once expired, the project won't be able to connect to the database, and it'll throw connection errors.
->
-> To avoid the connection errors and make the database **persistent**, run `npm run neon:claim`. After claiming it, the database becomes persistent and suitable for production use as well.
+Edit `.env.local` with your configuration:
+- Database connection string
+- Clerk authentication keys
+- Other service credentials
 
-> [!CAUTION]
-> The authentication system requires environment variables to be set up. Please refer to the [Set up authentication](#set-up-authentication) section.
+4. Run database migrations:
+```bash
+pnpm db:migrate
+```
 
-Need advanced features? Multi-tenancy & Teams, Roles & Permissions, Shadcn UI, End-to-End Typesafety with oRPC, Stripe Payment, Light / Dark mode. Try [Next.js Boilerplate Pro](https://nextjs-boilerplate.com/pro-saas-starter-kit).
+5. Start the development server:
+```bash
+pnpm dev
+```
+
+The application will be available at `http://localhost:3000`
 
 ### Set up authentication
 
-To get started, you will need to create a Clerk account at [Clerk.com](https://clerk.com?utm_source=github&utm_medium=sponsorship&utm_campaign=nextjs-boilerplate) and create a new application in the Clerk Dashboard. Once you have done that, copy the `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` values and add them to the `.env.local` file (not tracked by Git):
+Create a Clerk account at [Clerk.com](https://clerk.com) and create a new application in the Clerk Dashboard. Copy the `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` values and add them to the `.env.local` file:
 
 ```shell
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=your_clerk_pub_key
 CLERK_SECRET_KEY=your_clerk_secret_key
 ```
 
-Now you have a fully functional authentication system with Next.js, including features such as sign up, sign in, sign out, forgot password, reset password, update profile, update password, update email, delete account, and more.
+### Set up database
 
-### Set up remote database
+The project uses DrizzleORM with PostgreSQL. When you launch the project locally for the first time, it automatically creates a temporary PostgreSQL database.
 
-The project uses DrizzleORM, a type-safe ORM that is compatible with PostgreSQL, SQLite, and MySQL databases. By default, the project is configured to seamlessly work with PostgreSQL, and you have the flexibility to choose any PostgreSQL database provider of your choice.
-
-When you launch the project locally for the first time, it automatically creates a temporary PostgreSQL database. This allows you to work with a PostgreSQL database without Docker or any additional setup.
-
-This temporary database will **expire after 72 hours** if you don't claim it. To avoid connection errors and **make the database persistent**, simply run the following command:
+This temporary database will **expire after 72 hours** if you don't claim it. To make the database **persistent**, run:
 
 ```shell
-npm run neon:claim
+pnpm run neon:claim
 ```
 
-Then, follow the instructions provided in the terminal to complete the claiming process.
+## Usage
 
-Once claimed, the database is suitable for production use. You can create separate database branches for development, staging, and production environments to keep data isolated.
+### Creating Your First Spreadsheet
 
-#### Create a fresh and empty database
+1. Navigate to the dashboard
+2. Click "Add Row" to create a new entry
+3. Fill in the required fields:
+   - **Item Name**: The identifier for your entry
+   - **Quantity**: Numeric value (inventory count, hours, etc.)
+   - **Unit**: Measurement unit (pcs, kg, hours, etc.)
+   - **Status**: Current state (Active, Pending, Completed, Inactive)
+   - **Date**: Relevant date for the entry
+   - **Category**: Optional categorization
 
-If you want to create a fresh and empty database, you just need to remove the following environment variables: `DATABASE_URL`, `DATABASE_URL_DIRECT` and `PUBLIC_INSTAGRES_CLAIM_URL` from the `.env.local` file.
+4. Click "Save Changes" to persist your data
 
-Then, run the following command to create a new temporary database:
+### Editing Data
+
+- **Single Click**: Select a cell to edit (except locked item names)
+- **Double Click**: Quick edit mode
+- **Tab/Enter**: Navigate between cells
+- **Escape**: Cancel editing
+
+### Managing Rows
+
+- **Add Row**: Click the "Add Row" button in the toolbar
+- **Delete Row**: Click the delete button in the row's action column
+- **Batch Update**: Modify multiple rows and save all changes at once
+
+### Lock/Unlock Feature
+
+The lock toggle in the toolbar controls whether item names can be edited for new rows:
+- **Locked** (default): Item names are read-only, preventing accidental changes
+- **Unlocked**: Item names can be edited for newly created rows
+
+## Database Schema
+
+The core data structure includes:
+
+```typescript
+{
+  id: number; // Unique identifier
+  itemName: string; // Name/description of the item
+  quantity: number; // Numeric value
+  unit: string; // Unit of measurement
+  status: string; // Current status
+  date: string | null; // Associated date
+  categoryName: string | null; // Category classification
+}
+```
+
+## Development
+
+### Available Scripts
+
+- `pnpm dev`: Start development server
+- `pnpm build`: Build for production
+- `pnpm start`: Start production server
+- `pnpm lint`: Run ESLint
+- `pnpm test`: Run tests
+- `pnpm db:studio`: Open Drizzle Studio for database management
+- `pnpm db:migrate`: Run database migrations
+
+### Code Quality
+
+The project uses:
+- TypeScript for type safety
+- ESLint for code linting
+- Prettier for code formatting
+- Vitest for unit testing
+- Playwright for E2E testing
+
+## Project Structure
+
+```
+src/
+├── app/
+│   └── [locale]/
+│       ├── DataTable.ts          # Server actions for CRUD operations
+│       ├── DataTableUI.tsx       # Client-side spreadsheet component
+│       ├── dashboard/            # Dashboard pages
+│       └── page.tsx             # Main page
+├── libs/
+│   └── DB.ts                    # Database configuration
+├── models/
+│   ├── Schema.ts                # Drizzle schema definitions
+│   └── Relations.ts             # Database relations
+└── components/                   # Reusable components
+```
+
+### Modifying Database Schema
+
+To modify the database schema, update the schema file at [src/models/Schema.ts](src/models/Schema.ts).
+
+After making changes, generate a migration:
 
 ```shell
-npm run dev
+pnpm run db:generate
 ```
 
-After the database is created, the connection strings will be automatically added to your `.env.local` file. And, don't forget to claim the database with `npm run neon:claim`.
-
-### Translation (i18n) setup
-
-For translation, the project uses `next-intl` combined with [Crowdin](https://l.crowdin.com/next-js). As a developer, you only need to take care of the English (or another default language) version. Translations for other languages are automatically generated and handled by Crowdin. You can use Crowdin to collaborate with your translation team or translate the messages yourself with the help of machine translation.
-
-To set up translation (i18n), create an account at [Crowdin.com](https://l.crowdin.com/next-js) and create a new project. In the newly created project, you will be able to find the project ID. You will also need to create a new Personal Access Token by going to Account Settings > API. Then, in your GitHub Actions, you need to define the following environment variables: `CROWDIN_PROJECT_ID` and `CROWDIN_PERSONAL_TOKEN`.
-
-After defining the environment variables in your GitHub Actions, your localization files will be synchronized with Crowdin every time you push a new commit to the `main` branch.
-
-### Project structure
+Then apply the migration:
 
 ```shell
-.
-├── README.md                       # README file
-├── .github                         # GitHub folder
-│   ├── actions                     # Reusable actions
-│   └── workflows                   # GitHub Actions workflows
-├── .storybook                      # Storybook folder
-├── .vscode                         # VSCode configuration
-├── migrations                      # Database migrations
-├── public                          # Public assets folder
-├── src
-│   ├── app                         # Next JS App (App Router)
-│   ├── components                  # React components
-│   ├── libs                        # 3rd party libraries configuration
-│   ├── locales                     # Locales folder (i18n messages)
-│   ├── models                      # Database models
-│   ├── styles                      # Styles folder
-│   ├── templates                   # Templates folder
-│   ├── types                       # Type definitions
-│   ├── utils                       # Utilities folder
-│   └── validations                 # Validation schemas
-├── tests
-│   ├── e2e                         # E2E tests, also includes Monitoring as Code
-│   └── integration                 # Integration tests
-├── next.config.ts                  # Next JS configuration
-└── tsconfig.json                   # TypeScript configuration
+pnpm run db:migrate
 ```
-
-### Customization
-
-You can easily configure Next js Boilerplate by searching the entire project for `FIXME:` to make quick customizations. Here are some of the most important files to customize:
-
-- `public/apple-touch-icon.png`, `public/favicon.ico`, `public/favicon-16x16.png` and `public/favicon-32x32.png`: your website favicon
-- `src/utils/AppConfig.ts`: configuration file
-- `src/templates/BaseTemplate.tsx`: default theme
-- `next.config.ts`: Next.js configuration
-- `.env`: default environment variables
-
-You have full access to the source code for further customization. The provided code is just an example to help you start your project. The sky's the limit 🚀.
-
-### Change database schema
-
-To modify the database schema in the project, you can update the schema file located at `./src/models/Schema.ts`. This file defines the structure of your database tables using the Drizzle ORM library.
-
-After making changes to the schema, generate a migration by running the following command:
-
-```shell
-npm run db:generate
-```
-
-This will create a migration file that reflects your schema changes.
-
-After making sure your database is running, you can apply the generated migration using:
-
-```shell
-npm run db:migrate
-```
-
-There is no need to restart the Next.js server for the changes to take effect.
 
 ### Commit Message Format
 

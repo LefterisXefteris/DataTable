@@ -1,0 +1,31 @@
+import { pgTable, varchar, foreignKey, serial, doublePrecision, date, text, bigint } from "drizzle-orm/pg-core"
+import { sql } from "drizzle-orm"
+
+
+
+export const categories = pgTable("Categories", {
+	categoryName: varchar("CategoryName", { length: 255 }).primaryKey().notNull(),
+});
+
+export const tableData = pgTable("TableData", {
+	id: serial().primaryKey().notNull(),
+	itemName: varchar({ length: 255 }).notNull(),
+	quantity: doublePrecision().notNull(),
+	unit: varchar({ length: 50 }).notNull(),
+	status: varchar({ length: 50 }).notNull(),
+	date: date(),
+	categoryName: varchar({ length: 255 }),
+}, (table) => [
+	foreignKey({
+			columns: [table.categoryName],
+			foreignColumns: [categories.categoryName],
+			name: "TableData_categoryName_fkey"
+		}),
+]);
+
+export const drizzleMigrations = pgTable("__drizzle_migrations", {
+	id: serial().primaryKey().notNull(),
+	hash: text().notNull(),
+	// You can use { mode: "bigint" } if numbers are exceeding js number limitations
+	createdAt: bigint("created_at", { mode: "number" }),
+});

@@ -2,8 +2,6 @@ import type { Metadata } from 'next';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { setRequestLocale } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { PostHogProvider } from '@/components/analytics/PostHogProvider';
-import { DemoBadge } from '@/components/DemoBadge';
 import { routing } from '@/libs/I18nRouting';
 import '@/styles/global.css';
 
@@ -52,11 +50,9 @@ export default async function RootLayout(props: {
     <html lang={locale}>
       <body>
         <NextIntlClientProvider>
-          <PostHogProvider>
-            {props.children}
-          </PostHogProvider>
 
-          <DemoBadge />
+          {props.children}
+
         </NextIntlClientProvider>
       </body>
     </html>
