@@ -1,7 +1,7 @@
+import type { EditableRow, TableRow } from '../types';
 import { useRouter } from 'next/navigation';
 import { useTransition } from 'react';
 import { batchUpdateRows, createRow, deleteRow } from '../../DataTable';
-import type { EditableRow, TableRow } from '../types';
 
 type UseTableActionsProps = {
   rows: EditableRow[];
@@ -46,7 +46,7 @@ export const useTableActions = ({
 
   // Handle cell value change
   const handleCellChange = (rowId: number, column: keyof TableRow, value: string | number) => {
-    setRows((prevRows) =>
+    setRows(prevRows =>
       prevRows.map((row) => {
         if (row.id === rowId) {
           return { ...row, [column]: value };

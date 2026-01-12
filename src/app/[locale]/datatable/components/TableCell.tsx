@@ -1,4 +1,5 @@
 import type { EditableRow, TableRow } from '../types';
+import { useEffect, useRef } from 'react';
 
 type TableCellProps = {
   row: EditableRow;
@@ -20,11 +21,18 @@ export const TableCell = ({
   onStopEditing,
 }: TableCellProps) => {
   const value = row[column];
+  const inputRef = useRef<HTMLInputElement | HTMLSelectElement>(null);
+
+  useEffect(() => {
+    if (isEditing && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [isEditing]);
 
   if (row.isDeleted) {
     return (
-      <td className="border-b border-zinc-800/50 bg-zinc-800/30 px-4 py-3 text-zinc-500 line-through">
-        <span className="text-sm">{String(value || '')}</span>
+      <td className="border-r border-b border-zinc-800/30 bg-zinc-800/20 px-6 py-2.5 text-zinc-500 line-through">
+        <span className="text-[13px]">{String(value || '')}</span>
       </td>
     );
   }
@@ -32,8 +40,9 @@ export const TableCell = ({
   if (isEditing) {
     if (column === 'quantity') {
       return (
-        <td className="border-b border-zinc-800/50 bg-zinc-900/50 px-4 py-3">
+        <td className="border-r border-b border-zinc-800/30 bg-blue-500/5 px-6 py-2.5">
           <input
+            ref={inputRef as React.RefObject<HTMLInputElement>}
             type="number"
             value={value as number}
             onChange={e =>
@@ -44,8 +53,7 @@ export const TableCell = ({
                 onStopEditing();
               }
             }}
-            className="w-full rounded-md border border-blue-500/50 bg-zinc-900 px-3 py-1.5 text-sm text-white transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 focus:outline-none"
-            autoFocus
+            className="w-full border-0 bg-transparent px-0 py-0 text-[13px] text-white focus:ring-0 focus:outline-none"
           />
         </td>
       );
@@ -53,19 +61,19 @@ export const TableCell = ({
 
     if (column === 'date') {
       return (
-        <td className="border-b border-zinc-800/50 bg-zinc-900/50 px-4 py-3">
+        <td className="border-r border-b border-zinc-800/30 bg-blue-500/5 px-6 py-2.5">
           <input
+            ref={inputRef as React.RefObject<HTMLInputElement>}
             type="date"
             value={value ? String(value).split('T')[0] : ''}
-            onChange={e => onCellChange(row.id, column, e.target.value || null)}
+            onChange={e => onCellChange(row.id, column, e.target.value || '')}
             onBlur={onStopEditing}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === 'Escape') {
                 onStopEditing();
               }
             }}
-            className="w-full rounded-md border border-blue-500/50 bg-zinc-900 px-3 py-1.5 text-sm text-white transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 focus:outline-none"
-            autoFocus
+            className="w-full border-0 bg-transparent px-0 py-0 text-[13px] text-white focus:ring-0 focus:outline-none"
           />
         </td>
       );
@@ -73,8 +81,9 @@ export const TableCell = ({
 
     if (column === 'status') {
       return (
-        <td className="border-b border-zinc-800/50 bg-zinc-900/50 px-4 py-3">
+        <td className="border-r border-b border-zinc-800/30 bg-blue-500/5 px-6 py-2.5">
           <select
+            ref={inputRef as React.RefObject<HTMLSelectElement>}
             value={String(value || '')}
             onChange={e => onCellChange(row.id, column, e.target.value)}
             onBlur={onStopEditing}
@@ -83,8 +92,7 @@ export const TableCell = ({
                 onStopEditing();
               }
             }}
-            className="w-full cursor-pointer rounded-md border border-blue-500/50 bg-zinc-900 px-3 py-1.5 text-sm text-white transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 focus:outline-none"
-            autoFocus
+            className="w-full cursor-pointer border-0 bg-transparent px-0 py-0 text-[13px] text-white focus:ring-0 focus:outline-none"
           >
             <option value="" className="bg-zinc-900">Select status</option>
             <option value="Active" className="bg-zinc-900">Active</option>
@@ -98,8 +106,9 @@ export const TableCell = ({
 
     // Default text input
     return (
-      <td className="border-b border-zinc-800/50 bg-zinc-900/50 px-4 py-3">
+      <td className="border-r border-b border-zinc-800/30 bg-blue-500/5 px-6 py-2.5">
         <input
+          ref={inputRef as React.RefObject<HTMLInputElement>}
           type="text"
           value={String(value || '')}
           onChange={e => onCellChange(row.id, column, e.target.value)}
@@ -109,8 +118,7 @@ export const TableCell = ({
               onStopEditing();
             }
           }}
-          className="w-full rounded-md border border-blue-500/50 bg-zinc-900 px-3 py-1.5 text-sm text-white transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500/50 focus:outline-none"
-          autoFocus
+          className="w-full border-0 bg-transparent px-0 py-0 text-[13px] text-white focus:ring-0 focus:outline-none"
         />
       </td>
     );
@@ -121,10 +129,10 @@ export const TableCell = ({
 
   return (
     <td
-      className={`border-b border-zinc-800/50 px-4 py-3 text-sm text-zinc-200 ${
+      className={`border-r border-b border-zinc-800/30 px-6 py-2.5 text-[13px] text-zinc-200 ${
         isItemNameReadOnly
-          ? 'cursor-not-allowed bg-zinc-800/10'
-          : 'group cursor-pointer transition-colors hover:bg-zinc-800/30'
+          ? 'cursor-not-allowed bg-zinc-900/50'
+          : 'group cursor-cell transition-colors hover:bg-zinc-800/40'
       }`}
       onClick={() => !isItemNameReadOnly && onStartEditing(row.id, column)}
       onDoubleClick={() => !isItemNameReadOnly && onStartEditing(row.id, column)}
@@ -132,15 +140,15 @@ export const TableCell = ({
     >
       <div className="flex items-center gap-2">
         {isItemNameReadOnly && (
-          <svg className="h-3.5 w-3.5 flex-shrink-0 text-zinc-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg className="h-3 w-3 flex-shrink-0 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
           </svg>
         )}
-        <span className={isItemNameReadOnly ? 'text-zinc-400' : 'transition-colors group-hover:text-white'}>
+        <span className={isItemNameReadOnly ? 'text-zinc-500' : 'transition-colors group-hover:text-white'}>
           {value !== null && value !== undefined && String(value) !== ''
             ? String(value)
             : (
-                <span className="text-zinc-500 italic">Empty</span>
+                <span className="text-zinc-600 italic">—</span>
               )}
         </span>
       </div>
