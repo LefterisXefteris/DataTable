@@ -1,7 +1,9 @@
 import type { Metadata } from 'next';
-import { eq } from 'drizzle-orm';
+import { auth } from '@clerk/nextjs/server';
 
+import { and, eq } from 'drizzle-orm';
 import { getTranslations } from 'next-intl/server';
+import { redirect } from 'next/navigation';
 import { db } from '@/libs/DB';
 import { bookings, staffRota, tableData } from '@/models/Schema';
 import { SpreadSheet } from '../../DataTableUI';
@@ -21,12 +23,24 @@ export async function generateMetadata(props: {
 }
 
 export default async function Dashboard() {
-  const inventoryData = await db.select().from(tableData);
-  const staffRotaData = await db.select().from(staffRota);
+  // Get the current user from Clerk
+  const { userId } = await auth();
+
+  // Redirect to sign-in if not authenticated
+  if (!userId) {
+    redirect('/sign-in');
+  }
+
+  // Filter all data by the current user's ID
+  const inventoryData = await db.select().from(tableData).where(eq(tableData.userId, userId));
+  const staffRotaData = await db.select().from(staffRota).where(eq(staffRota.userId, userId));
 
   // Get today's date in YYYY-MM-DD format
   const today = new Date().toISOString().split('T')[0] as string;
-  const bookingsData = await db.select().from(bookings).where(eq(bookings.bookingDate, today));
+  const bookingsData = await db
+    .select()
+    .from(bookings)
+    .where(and(eq(bookings.bookingDate, today), eq(bookings.userId, userId)));
 
   return (
     <SpreadSheet

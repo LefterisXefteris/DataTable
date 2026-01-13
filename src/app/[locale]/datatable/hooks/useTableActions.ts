@@ -271,9 +271,14 @@ export const useTableActions = ({
           }
         }
 
-        setSuccess(true);
+        // Reset state before refresh to ensure proper data sync
         setHasChanges(false);
-        router.refresh();
+        setSuccess(true);
+
+        // Use setTimeout to ensure state updates are processed before refresh
+        setTimeout(() => {
+          router.refresh();
+        }, 100);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'An error occurred');
       }

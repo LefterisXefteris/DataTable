@@ -113,6 +113,7 @@ async function seedBookings() {
             : dayOffset < 7
               ? getRandomItem(['Confirmed', 'Pending'])
               : 'Confirmed',
+          userId: 'default_user',
         });
       }
     }

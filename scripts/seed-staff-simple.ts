@@ -28,6 +28,7 @@ async function seedStaffRota() {
       endTime: '17:00:00',
       location: 'Main Office',
       status: 'Scheduled',
+      userId: 'default_user',
     },
     {
       employeeName: 'Sarah Johnson',
@@ -37,6 +38,7 @@ async function seedStaffRota() {
       endTime: '16:00:00',
       location: 'Store Front',
       status: 'Scheduled',
+      userId: 'default_user',
     },
     {
       employeeName: 'Mike Davis',
@@ -46,6 +48,7 @@ async function seedStaffRota() {
       endTime: '14:00:00',
       location: 'Warehouse',
       status: 'Confirmed',
+      userId: 'default_user',
     },
     {
       employeeName: 'Emma Wilson',
@@ -55,6 +58,7 @@ async function seedStaffRota() {
       endTime: '18:00:00',
       location: 'Main Office',
       status: 'Scheduled',
+      userId: 'default_user',
     },
     {
       employeeName: 'James Brown',
@@ -64,6 +68,7 @@ async function seedStaffRota() {
       endTime: '20:00:00',
       location: 'Store Front',
       status: 'Pending',
+      userId: 'default_user',
     },
     {
       employeeName: 'Lisa Anderson',
@@ -73,6 +78,7 @@ async function seedStaffRota() {
       endTime: '22:00:00',
       location: 'Warehouse',
       status: 'Confirmed',
+      userId: 'default_user',
     },
     {
       employeeName: 'David Martinez',
@@ -82,6 +88,7 @@ async function seedStaffRota() {
       endTime: '08:00:00',
       location: 'Main Entrance',
       status: 'Confirmed',
+      userId: 'default_user',
     },
     {
       employeeName: 'Sarah Johnson',
@@ -91,6 +98,7 @@ async function seedStaffRota() {
       endTime: '17:00:00',
       location: 'Store Front',
       status: 'Scheduled',
+      userId: 'default_user',
     },
   ];
 

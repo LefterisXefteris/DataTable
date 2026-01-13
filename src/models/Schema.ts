@@ -13,6 +13,7 @@ export const tableData = pgTable('TableData', {
   status: varchar({ length: 50 }).notNull(),
   date: date(),
   categoryName: varchar({ length: 255 }),
+  userId: varchar('userId', { length: 255 }).notNull(),
 }, table => [
   foreignKey({
     columns: [table.categoryName],
@@ -30,6 +31,7 @@ export const staffRota = pgTable('StaffRota', {
   endTime: time().notNull(),
   location: varchar({ length: 100 }),
   status: varchar({ length: 50 }).notNull(),
+  userId: varchar('userId', { length: 255 }).notNull(),
 });
 
 export const bookings = pgTable('Bookings', {
@@ -43,6 +45,7 @@ export const bookings = pgTable('Bookings', {
   email: varchar({ length: 255 }),
   specialRequests: text(),
   status: varchar({ length: 50 }).notNull(),
+  userId: varchar('userId', { length: 255 }).notNull(),
 });
 
 export const drizzleMigrations = pgTable('__drizzle_migrations', {

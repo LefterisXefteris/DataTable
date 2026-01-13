@@ -1,16 +1,22 @@
 'use server';
 
-import { eq } from 'drizzle-orm';
-import { revalidatePath } from 'next/cache';
+import { auth } from '@clerk/nextjs/server';
+import { and, eq } from 'drizzle-orm';
 
+import { revalidatePath } from 'next/cache';
 import { db } from '@/libs/DB';
 import { bookings, staffRota, tableData } from '@/models/Schema';
 
 export async function updateQuantity(productId: number, newQty: number) {
+  const { userId } = await auth();
+  if (!userId) {
+    throw new Error('Unauthorized');
+  }
+
   await db
     .update(tableData)
     .set({ quantity: newQty })
-    .where(eq(tableData.id, productId));
+    .where(and(eq(tableData.id, productId), eq(tableData.userId, userId)));
 
   revalidatePath('/', 'layout');
 }
@@ -24,6 +30,11 @@ export async function createRow(data: {
   categoryName?: string | null;
 }) {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' };
+    }
+
     const result = await db
       .insert(tableData)
       .values({
@@ -33,6 +44,7 @@ export async function createRow(data: {
         status: data.status,
         date: data.date || null,
         categoryName: data.categoryName || null,
+        userId,
       })
       .returning();
 
@@ -50,6 +62,11 @@ export async function updateCell(
   value: string | number | null,
 ) {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' };
+    }
+
     const updateData: Record<string, unknown> = {};
 
     if (column === 'quantity') {
@@ -63,7 +80,7 @@ export async function updateCell(
     await db
       .update(tableData)
       .set(updateData)
-      .where(eq(tableData.id, rowId));
+      .where(and(eq(tableData.id, rowId), eq(tableData.userId, userId)));
 
     revalidatePath('/', 'layout');
     return { success: true };
@@ -75,9 +92,14 @@ export async function updateCell(
 
 export async function deleteRow(rowId: number) {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' };
+    }
+
     await db
       .delete(tableData)
-      .where(eq(tableData.id, rowId));
+      .where(and(eq(tableData.id, rowId), eq(tableData.userId, userId)));
 
     revalidatePath('/', 'layout');
     return { success: true };
@@ -97,12 +119,17 @@ export async function batchUpdateRows(updates: Array<{
   categoryName?: string | null;
 }>) {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' };
+    }
+
     const promises = updates.map((update) => {
       const { id, ...data } = update;
       return db
         .update(tableData)
         .set(data)
-        .where(eq(tableData.id, id));
+        .where(and(eq(tableData.id, id), eq(tableData.userId, userId)));
     });
 
     await Promise.all(promises);
@@ -117,7 +144,12 @@ export async function batchUpdateRows(updates: Array<{
 // Staff Rota Actions
 export async function getAllStaffRota() {
   try {
-    const result = await db.select().from(staffRota);
+    const { userId } = await auth();
+    if (!userId) {
+      return [];
+    }
+
+    const result = await db.select().from(staffRota).where(eq(staffRota.userId, userId));
     return result;
   } catch (error) {
     console.error('Error fetching staff rota:', error);
@@ -135,6 +167,11 @@ export async function createStaffRotaRow(data: {
   status: string;
 }) {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' };
+    }
+
     const result = await db
       .insert(staffRota)
       .values({
@@ -145,6 +182,7 @@ export async function createStaffRotaRow(data: {
         endTime: data.endTime,
         location: data.location || null,
         status: data.status,
+        userId,
       })
       .returning();
 
@@ -158,9 +196,14 @@ export async function createStaffRotaRow(data: {
 
 export async function deleteStaffRotaRow(rowId: number) {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' };
+    }
+
     await db
       .delete(staffRota)
-      .where(eq(staffRota.id, rowId));
+      .where(and(eq(staffRota.id, rowId), eq(staffRota.userId, userId)));
 
     revalidatePath('/', 'layout');
     return { success: true };
@@ -181,12 +224,17 @@ export async function batchUpdateStaffRotaRows(updates: Array<{
   status?: string;
 }>) {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' };
+    }
+
     const promises = updates.map((update) => {
       const { id, ...data } = update;
       return db
         .update(staffRota)
         .set(data)
-        .where(eq(staffRota.id, id));
+        .where(and(eq(staffRota.id, id), eq(staffRota.userId, userId)));
     });
 
     await Promise.all(promises);
@@ -201,7 +249,15 @@ export async function batchUpdateStaffRotaRows(updates: Array<{
 // Bookings Actions
 export async function getBookingsByDate(date: string) {
   try {
-    const result = await db.select().from(bookings).where(eq(bookings.bookingDate, date));
+    const { userId } = await auth();
+    if (!userId) {
+      return [];
+    }
+
+    const result = await db
+      .select()
+      .from(bookings)
+      .where(and(eq(bookings.bookingDate, date), eq(bookings.userId, userId)));
     return result;
   } catch (error) {
     console.error('Error fetching bookings:', error);
@@ -221,6 +277,11 @@ export async function createBookingRow(data: {
   status: string;
 }) {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' };
+    }
+
     const result = await db
       .insert(bookings)
       .values({
@@ -233,6 +294,7 @@ export async function createBookingRow(data: {
         email: data.email || null,
         specialRequests: data.specialRequests || null,
         status: data.status,
+        userId,
       })
       .returning();
 
@@ -246,9 +308,14 @@ export async function createBookingRow(data: {
 
 export async function deleteBookingRow(rowId: number) {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' };
+    }
+
     await db
       .delete(bookings)
-      .where(eq(bookings.id, rowId));
+      .where(and(eq(bookings.id, rowId), eq(bookings.userId, userId)));
 
     revalidatePath('/', 'layout');
     return { success: true };
@@ -271,12 +338,17 @@ export async function batchUpdateBookingRows(updates: Array<{
   status?: string;
 }>) {
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      return { success: false, error: 'Unauthorized' };
+    }
+
     const promises = updates.map((update) => {
       const { id, ...data } = update;
       return db
         .update(bookings)
         .set(data)
-        .where(eq(bookings.id, id));
+        .where(and(eq(bookings.id, id), eq(bookings.userId, userId)));
     });
 
     await Promise.all(promises);
