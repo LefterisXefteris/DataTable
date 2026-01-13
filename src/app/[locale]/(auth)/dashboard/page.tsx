@@ -1,5 +1,10 @@
 import type { Metadata } from 'next';
+import { eq } from 'drizzle-orm';
+
 import { getTranslations } from 'next-intl/server';
+import { db } from '@/libs/DB';
+import { bookings, staffRota, tableData } from '@/models/Schema';
+import { SpreadSheet } from '../../DataTableUI';
 
 export async function generateMetadata(props: {
   params: Promise<{ locale: string }>;
@@ -15,10 +20,20 @@ export async function generateMetadata(props: {
   };
 }
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const inventoryData = await db.select().from(tableData);
+  const staffRotaData = await db.select().from(staffRota);
+
+  // Get today's date in YYYY-MM-DD format
+  const today = new Date().toISOString().split('T')[0] as string;
+  const bookingsData = await db.select().from(bookings).where(eq(bookings.bookingDate, today));
+
   return (
-    <div className="py-5 [&_p]:my-6">
-      {/* Dashboard content */}
-    </div>
+    <SpreadSheet
+      inventoryData={inventoryData}
+      staffRotaData={staffRotaData}
+      bookingsData={bookingsData}
+      initialBookingDate={today}
+    />
   );
 }

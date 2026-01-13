@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
 import type { EditableRow, EditingCell, TableRow } from '../types';
+import { useEffect, useState } from 'react';
 
 export const useTableState = (initialData: TableRow[]) => {
   const [rows, setRows] = useState<EditableRow[]>(initialData);
@@ -12,6 +12,7 @@ export const useTableState = (initialData: TableRow[]) => {
   // Sync state with props when initialData changes (after refresh)
   useEffect(() => {
     if (!hasChanges) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect, react-hooks-extra/no-direct-set-state-in-use-effect
       setRows(initialData);
     }
   }, [initialData, hasChanges]);

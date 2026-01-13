@@ -1,13 +1,13 @@
-import type { EditableRow, TableRow } from '../types';
+import type { ColumnDefinition, EditableRow } from '../types';
 import { useEffect, useRef } from 'react';
 
 type TableCellProps = {
   row: EditableRow;
-  column: keyof TableRow;
+  column: ColumnDefinition;
   isEditing: boolean;
   isItemNameLocked: boolean;
-  onCellChange: (rowId: number, column: keyof TableRow, value: string | number) => void;
-  onStartEditing: (rowId: number, column: keyof TableRow) => void;
+  onCellChange: (rowId: number, column: string, value: string | number) => void;
+  onStartEditing: (rowId: number, column: string) => void;
   onStopEditing: () => void;
 };
 
@@ -20,7 +20,7 @@ export const TableCell = ({
   onStartEditing,
   onStopEditing,
 }: TableCellProps) => {
-  const value = row[column];
+  const value = row[column.id];
   const inputRef = useRef<HTMLInputElement | HTMLSelectElement>(null);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export const TableCell = ({
   }
 
   if (isEditing) {
-    if (column === 'quantity') {
+    if (column.type === 'number') {
       return (
         <td className="border-r border-b border-zinc-800/30 bg-blue-500/5 px-6 py-2.5">
           <input
@@ -46,7 +46,7 @@ export const TableCell = ({
             type="number"
             value={value as number}
             onChange={e =>
-              onCellChange(row.id, column, Number.parseFloat(e.target.value) || 0)}
+              onCellChange(row.id, column.id, Number.parseFloat(e.target.value) || 0)}
             onBlur={onStopEditing}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === 'Escape') {
@@ -59,14 +59,14 @@ export const TableCell = ({
       );
     }
 
-    if (column === 'date') {
+    if (column.type === 'date') {
       return (
         <td className="border-r border-b border-zinc-800/30 bg-blue-500/5 px-6 py-2.5">
           <input
             ref={inputRef as React.RefObject<HTMLInputElement>}
             type="date"
             value={value ? String(value).split('T')[0] : ''}
-            onChange={e => onCellChange(row.id, column, e.target.value || '')}
+            onChange={e => onCellChange(row.id, column.id, e.target.value || '')}
             onBlur={onStopEditing}
             onKeyDown={(e) => {
               if (e.key === 'Enter' || e.key === 'Escape') {
@@ -79,13 +79,13 @@ export const TableCell = ({
       );
     }
 
-    if (column === 'status') {
+    if (column.type === 'dropdown') {
       return (
         <td className="border-r border-b border-zinc-800/30 bg-blue-500/5 px-6 py-2.5">
           <select
             ref={inputRef as React.RefObject<HTMLSelectElement>}
             value={String(value || '')}
-            onChange={e => onCellChange(row.id, column, e.target.value)}
+            onChange={e => onCellChange(row.id, column.id, e.target.value)}
             onBlur={onStopEditing}
             onKeyDown={(e) => {
               if (e.key === 'Escape') {
@@ -94,11 +94,13 @@ export const TableCell = ({
             }}
             className="w-full cursor-pointer border-0 bg-transparent px-0 py-0 text-[13px] text-white focus:ring-0 focus:outline-none"
           >
-            <option value="" className="bg-zinc-900">Select status</option>
-            <option value="Active" className="bg-zinc-900">Active</option>
-            <option value="Inactive" className="bg-zinc-900">Inactive</option>
-            <option value="Pending" className="bg-zinc-900">Pending</option>
-            <option value="Completed" className="bg-zinc-900">Completed</option>
+            <option value="" className="bg-zinc-900">
+              Select
+              {column.name.toLowerCase()}
+            </option>
+            {column.options?.map(option => (
+              <option key={option} value={option} className="bg-zinc-900">{option}</option>
+            ))}
           </select>
         </td>
       );
@@ -111,40 +113,67 @@ export const TableCell = ({
           ref={inputRef as React.RefObject<HTMLInputElement>}
           type="text"
           value={String(value || '')}
-          onChange={e => onCellChange(row.id, column, e.target.value)}
+          onChange={e => onCellChange(row.id, column.id, e.target.value)}
           onBlur={onStopEditing}
           onKeyDown={(e) => {
             if (e.key === 'Enter' || e.key === 'Escape') {
               onStopEditing();
             }
           }}
-          className="w-full border-0 bg-transparent px-0 py-0 text-[13px] text-white focus:ring-0 focus:outline-none"
+          className={`w-full border-0 bg-transparent px-0 py-0 text-[13px] focus:ring-0 focus:outline-none ${
+            column.locked
+              ? 'font-semibold tracking-wide text-rose-400'
+              : 'text-white'
+          }`}
+          style={
+            column.locked
+              ? { textShadow: '0 0 10px rgba(251, 113, 133, 0.4)' }
+              : undefined
+          }
         />
       </td>
     );
   }
 
   // Display mode
-  const isItemNameReadOnly = column === 'itemName' && (!row.isNew || isItemNameLocked);
+  const isColumnReadOnly = column.locked && (!row.isNew || isItemNameLocked);
+  const isLockedColumn = column.locked;
 
   return (
     <td
       className={`border-r border-b border-zinc-800/30 px-6 py-2.5 text-[13px] text-zinc-200 ${
-        isItemNameReadOnly
+        isColumnReadOnly
           ? 'cursor-not-allowed bg-zinc-900/50'
           : 'group cursor-cell transition-colors hover:bg-zinc-800/40'
       }`}
-      onClick={() => !isItemNameReadOnly && onStartEditing(row.id, column)}
-      onDoubleClick={() => !isItemNameReadOnly && onStartEditing(row.id, column)}
-      title={isItemNameReadOnly ? 'Item name is read-only' : undefined}
+      onClick={() => !isColumnReadOnly && onStartEditing(row.id, column.id)}
+      onDoubleClick={() => !isColumnReadOnly && onStartEditing(row.id, column.id)}
+      title={isColumnReadOnly ? `${column.name} is read-only` : undefined}
     >
       <div className="flex items-center gap-2">
-        {isItemNameReadOnly && (
+        {isColumnReadOnly && (
           <svg className="h-3 w-3 flex-shrink-0 text-zinc-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
           </svg>
         )}
-        <span className={isItemNameReadOnly ? 'text-zinc-500' : 'transition-colors group-hover:text-white'}>
+        <span
+          className={
+            isLockedColumn
+              ? `font-semibold tracking-wide ${
+                isColumnReadOnly
+                  ? 'text-rose-400/60'
+                  : 'text-rose-400 transition-all group-hover:text-rose-300 group-hover:drop-shadow-[0_0_8px_rgba(251,113,133,0.5)]'
+              }`
+              : isColumnReadOnly
+                ? 'text-zinc-500'
+                : 'transition-colors group-hover:text-white'
+          }
+          style={
+            isLockedColumn && !isColumnReadOnly
+              ? { textShadow: '0 0 10px rgba(251, 113, 133, 0.3)' }
+              : undefined
+          }
+        >
           {value !== null && value !== undefined && String(value) !== ''
             ? String(value)
             : (

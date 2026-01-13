@@ -1,0 +1,27 @@
+2026/01/12-15:46:34.104 3c4d2 Reusing MANIFEST /Users/lefterisgilmaz/Desktop/DataTable/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/01/12-15:46:34.104 3c4d2 Recovering log #283
+2026/01/12-15:46:34.152 3c4d2 Reusing old log /Users/lefterisgilmaz/Desktop/DataTable/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000283.log 
+2026/01/12-15:46:35.409 3c4d0 Level-0 table #295: started
+2026/01/12-15:46:35.432 3c4d0 Level-0 table #295: 881611 bytes OK
+2026/01/12-15:46:35.434 3c4d0 Delete type=0 #283
+2026/01/12-15:46:35.434 3c4d0 Manual compaction at level-0 from '\x00%\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00&\x00\x00\x00' @ 0 : 0; will stop at (end)
+2026/01/12-15:46:35.451 3c4ec Compacting 1@1 + 8@2 files
+2026/01/12-15:46:35.495 3c4ec Generated table #296@1: 49666 keys, 2240604 bytes
+2026/01/12-15:46:35.525 3c4ec Generated table #297@1: 3756 keys, 2151288 bytes
+2026/01/12-15:46:35.549 3c4ec Generated table #298@1: 3847 keys, 2150291 bytes
+2026/01/12-15:46:35.574 3c4ec Generated table #299@1: 20139 keys, 2182464 bytes
+2026/01/12-15:46:35.612 3c4ec Generated table #300@1: 38910 keys, 2238926 bytes
+2026/01/12-15:46:35.637 3c4ec Generated table #301@1: 53308 keys, 2190232 bytes
+2026/01/12-15:46:35.672 3c4ec Generated table #302@1: 104228 keys, 2256018 bytes
+2026/01/12-15:46:35.677 3c4ec Generated table #303@1: 13861 keys, 293334 bytes
+2026/01/12-15:46:35.677 3c4ec Compacted 1@1 + 8@2 files => 15703157 bytes
+2026/01/12-15:46:35.677 3c4ec compacted to: files[ 0 0 8 0 0 0 0 ]
+2026/01/12-15:46:35.678 3c4ec Delete type=2 #288
+2026/01/12-15:46:35.678 3c4ec Delete type=2 #289
+2026/01/12-15:46:35.678 3c4ec Delete type=2 #295
+2026/01/12-15:46:35.678 3c4ec Delete type=2 #290
+2026/01/12-15:46:35.678 3c4ec Delete type=2 #291
+2026/01/12-15:46:35.678 3c4ec Delete type=2 #285
+2026/01/12-15:46:35.678 3c4ec Delete type=2 #287
+2026/01/12-15:46:35.678 3c4ec Delete type=2 #286
+2026/01/12-15:46:35.678 3c4ec Delete type=2 #292

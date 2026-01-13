@@ -1,9 +1,8 @@
-import { db } from '@/libs/DB';
-import { tableData } from '../../models/Schema';
-import { SpreadSheet } from './DataTableUI';
+import { redirect } from 'next/navigation';
 
-export default async function Page() {
-  const initialData = await db.select().from(tableData);
-
-  return <SpreadSheet initialData={initialData} />;
+export default async function Page(props: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await props.params;
+  redirect(`/${locale}/dashboard`);
 }

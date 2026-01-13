@@ -1,0 +1,4 @@
+2026/01/12-15:47:08.181 3c95d Reusing MANIFEST /Users/lefterisgilmaz/Desktop/DataTable/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2026/01/12-15:47:08.181 3c95d Recovering log #294
+2026/01/12-15:47:08.188 3c95d Reusing old log /Users/lefterisgilmaz/Desktop/DataTable/.wwebjs_auth/session/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/000294.log 
+2026/01/12-15:47:09.289 3c96e Manual compaction at level-0 from '\x00&\x00\x00\x00' @ 72057594037927935 : 1 .. '\x00'\x00\x00\x00' @ 0 : 0; will stop at (end)

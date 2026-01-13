@@ -1,19 +1,21 @@
-import type { EditableRow, EditingCell, TableRow } from '../types';
+import type { ColumnDefinition, EditableRow, EditingCell } from '../types';
 import { TableCell } from './TableCell';
 
 type TableBodyProps = {
   rows: EditableRow[];
+  columns: ColumnDefinition[];
   editingCell: EditingCell;
   isItemNameLocked: boolean;
   isPending: boolean;
-  onCellChange: (rowId: number, column: keyof TableRow, value: string | number) => void;
-  onStartEditing: (rowId: number, column: keyof TableRow) => void;
+  onCellChange: (rowId: number, column: string, value: string | number) => void;
+  onStartEditing: (rowId: number, column: string) => void;
   onStopEditing: () => void;
   onDeleteRow: (rowId: number) => void;
 };
 
 export const TableBody = ({
   rows,
+  columns,
   editingCell,
   isItemNameLocked,
   isPending,
@@ -24,14 +26,14 @@ export const TableBody = ({
 }: TableBodyProps) => {
   const visibleRows = rows.filter(r => !r.isDeleted);
 
-  const renderCell = (row: EditableRow, column: keyof TableRow) => {
-    const isEditing = editingCell?.rowId === row.id && editingCell?.column === column;
+  const renderCell = (row: EditableRow, columnDef: ColumnDefinition) => {
+    const isEditing = editingCell?.rowId === row.id && editingCell?.column === columnDef.id;
 
     return (
       <TableCell
-        key={column}
+        key={columnDef.id}
         row={row}
-        column={column}
+        column={columnDef}
         isEditing={isEditing}
         isItemNameLocked={isItemNameLocked}
         onCellChange={onCellChange}
@@ -46,7 +48,7 @@ export const TableBody = ({
       {visibleRows.length === 0
         ? (
             <tr>
-              <td colSpan={7} className="px-6 py-16 text-center">
+              <td colSpan={columns.length + 1} className="px-6 py-16 text-center">
                 <div className="flex flex-col items-center gap-3">
                   <svg className="h-10 w-10 text-zinc-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -63,12 +65,7 @@ export const TableBody = ({
                 key={row.id}
                 className="group transition-colors hover:bg-zinc-900/30"
               >
-                {renderCell(row, 'itemName')}
-                {renderCell(row, 'quantity')}
-                {renderCell(row, 'unit')}
-                {renderCell(row, 'status')}
-                {renderCell(row, 'date')}
-                {renderCell(row, 'categoryName')}
+                {columns.map(column => renderCell(row, column))}
                 <td className="border-b border-zinc-800/30 px-6 py-2.5">
                   <button
                     onClick={() => onDeleteRow(row.id)}
